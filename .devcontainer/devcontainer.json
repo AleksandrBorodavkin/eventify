@@ -21,7 +21,9 @@
       "extensions": [
         "oven.bun-vscode",
         "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github"
       ]
     }
   },
