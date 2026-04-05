@@ -39,6 +39,8 @@ jobs:
 
       - name: Build
         run: bun run build
+        env:
+          VITE_API_DOMAIN: ${{ vars.VITE_API_DOMAIN }}
 
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
