@@ -1,0 +1,43 @@
+.initialChatJoinGate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.initialChatJoinBox {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 12px;
+  border: 1px dashed var(--tgui--hint_color, rgba(120, 120, 128, 0.45));
+  border-radius: 10px;
+  text-align: center;
+}
+
+.initialChatJoinCaption {
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.initialChatJoinLink {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+  color: var(--tgui--link_color, var(--tg-theme-link-color, #2481cc));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.initialChatJoinLink:active {
+  opacity: 0.85;
+}

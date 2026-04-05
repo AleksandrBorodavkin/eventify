@@ -1,0 +1,62 @@
+### GET request to example server
+GET http://localhost:3000/users
+
+
+
+### Send POST request with json body
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "telegramId": "Marina",
+  "firstName": "222",
+  "lastName": "bobo",
+  "userName": "huhu",
+  "languageCode": "RU",
+  "isAdmin": true,
+  "isBot": true
+}
+###
+POST http://localhost:3000/events
+Content-Type: application/json
+
+{
+  "title": "New Year",
+  "description": "Celebrate new year with us",
+  "date": "2025-01-01T00:00:00Z",
+  "limit": 5,
+  "status": true
+}
+
+###
+
+###
+POST http://localhost:3000/events
+Content-Type: application/json
+
+{
+  "title": "Summer Party",
+  "description": "A great party to celebrate summer",
+  "date": "2024-08-15T18:00:00+02:00",
+  "limit": 6,
+  "status": true
+}
+
+### GET request to example server
+GET http://localhost:3002/events
+
+###
+POST http://localhost:3000/events/1/participants
+Content-Type: application/json
+
+{
+  "telegramId": "Marina",
+  "firstName": "222",
+  "lastName": "bobo",
+  "userName": "huhu",
+  "languageCode": "RU",
+  "isAdmin": true,
+  "isBot": true
+}
+### GET request to example server
+GET https://api.telegram.org/botXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/getUpdates

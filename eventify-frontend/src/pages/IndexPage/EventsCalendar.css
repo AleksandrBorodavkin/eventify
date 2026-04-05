@@ -1,0 +1,311 @@
+.eventsCalendar {
+  padding: 4px 0 2px;
+}
+
+.eventsCalendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 8px;
+}
+
+.eventsCalendarHeaderTitle {
+  font-weight: 600;
+  color: var(--tg-theme-text-color, #000);
+  font-size: 14px;
+}
+
+.eventsCalendarNavBtn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--tg-theme-link-color, #2a7efb);
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 12px;
+  font-size: 26px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+.eventsCalendarNavBtn:active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.eventsCalendarWeekRow {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px 10px 6px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.eventsCalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0 10px 8px;
+}
+
+/* Между календарём и списком дня — без дублирующего заголовка */
+.eventsCalendarDaySeparator {
+  margin: 14px 16px 10px;
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--tg-theme-hint-color, #9aa7b2) 55%, transparent) 20%,
+    color-mix(in srgb, var(--tg-theme-hint-color, #9aa7b2) 55%, transparent) 80%,
+    transparent 100%
+  );
+}
+
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .eventsCalendarDaySeparator {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 0, 0, 0.12) 25%,
+      rgba(0, 0, 0, 0.12) 75%,
+      transparent
+    );
+  }
+}
+
+.eventsCalendarDaySeparator--afterWeekRow {
+  margin: 8px 16px 12px;
+}
+
+.eventsCalendarDow {
+  font-size: 11px;
+  opacity: 0.65;
+  text-align: center;
+  padding: 4px 0 0;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.eventsCalendarCell {
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  min-height: 44px;
+  padding: 4px 5px 5px;
+  background: var(--tg-theme-bg-color, #fff);
+  color: var(--tg-theme-text-color, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.eventsCalendarCellHasEvents {
+  border-color: rgba(42, 126, 251, 0.35);
+  background: rgba(42, 126, 251, 0.06);
+}
+
+.eventsCalendarCellHasEvents::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -60%;
+  width: 60%;
+  height: 140%;
+  transform: skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 64, 0) 0%,
+    rgba(255, 0, 64, 0.55) 45%,
+    rgba(255, 0, 64, 0) 100%
+  );
+  opacity: 0.28;
+  pointer-events: none;
+  animation: eventsCalendarGlassShine 2.6s ease-in-out infinite;
+}
+
+.eventsCalendarCellOtherMonth {
+  opacity: 0.45;
+}
+
+.eventsCalendarCellSelected {
+  outline: 2px solid var(--tg-theme-link-color, #2a7efb);
+  outline-offset: 0;
+}
+
+.eventsCalendarCellDayNumRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.eventsCalendarCellDayNum {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.eventsCalendarCellCount {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+  opacity: 0.9;
+}
+
+.eventsCalendarCellCountBadge {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+@keyframes eventsCalendarGlassShine {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+    opacity: 0.0;
+  }
+  20% {
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(260%) skewX(-18deg);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateX(260%) skewX(-18deg);
+    opacity: 0.0;
+  }
+}
+
+.eventsCalendarJoinOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.eventsCalendarJoinCard {
+  cursor: default;
+  width: 100%;
+  max-width: 360px;
+  padding: 16px 16px 14px;
+  border-radius: 12px;
+  background: var(--tgui--bg_color, var(--tg-theme-bg-color, #fff));
+  border: 1px solid var(--tgui--separator_color, rgba(0, 0, 0, 0.08));
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  max-height: min(90vh, 520px);
+  overflow: auto;
+}
+
+/* Ячейка события: (1) заголовок — время — Участвую; (2) subtitle — свободно / лимит / резерв */
+.eventsCalendarEventRow1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.eventsCalendarEventRow1Title {
+  min-width: 0;
+  word-break: break-word;
+}
+
+.eventsCalendarEventRow1Dash {
+  color: var(--tgui--hint_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.45)));
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.eventsCalendarEventRow1Time {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--tgui--subtitle_text_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.55)));
+}
+
+.eventsCalendarEventRow1Partake {
+  color: var(--tgui--destructive_text_color);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.eventsCalendarEventRow1Invite {
+  flex-shrink: 0;
+  font-size: 1.4em;
+  line-height: 1;
+  user-select: none;
+}
+
+.eventsCalendarEventRow2 {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  column-gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+  min-width: 0;
+  color: var(--tgui--subtitle_text_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.55)));
+  line-height: 1.2;
+}
+
+.eventsCalendarEventStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: 1px;
+}
+
+.eventsCalendarEventStatLabel {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--tgui--hint_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.45)));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-align: center;
+}
+
+.eventsCalendarEventStatValue {
+  font-size: 12px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: var(--tgui--subtitle_text_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.62)));
+  white-space: nowrap;
+}
+
+.eventsCalendarEventStatSep {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--tgui--hint_color, var(--tg-theme-hint-color, rgba(0, 0, 0, 0.35)));
+  font-size: 11px;
+  line-height: 1;
+  padding: 0 1px;
+  user-select: none;
+}
+

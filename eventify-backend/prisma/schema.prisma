@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Профиль из подписанного initData (user): обновляется при записи на событие и при создании события.
+model User {
+  id             Int       @id @default(autoincrement())
+  telegramId     String    @unique
+  firstName      String?
+  lastName       String?
+  username       String?
+  languageCode   String?
+  isPremium      Boolean?
+  isBot          Boolean?
+  photoUrl       String?
+  allowsWriteToPm       Boolean?
+  addedToAttachmentMenu Boolean?
+  initProfileUpdatedAt  DateTime? @db.Timestamptz
+  savedGroups    SavedGroupChat[]
+  events         Event[]   @relation("UserEvent")
+  UserEvent      UserEvent[]
+  Event          Event[]
+}
+
+/// Подпись к ID чата у пользователя (для подсказок при создании событий).
+model SavedGroupChat {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId String
+  label  String @default("")
+  eventLinks EventSavedGroup[]
+
+  @@unique([userId, chatId])
+}
+
+/// Связь события с сохранёнными группами создателя (порядок — sortOrder).
+model EventSavedGroup {
+  eventId          Int
+  savedGroupChatId Int
+  sortOrder        Int            @default(0)
+  event            Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  savedGroupChat   SavedGroupChat @relation(fields: [savedGroupChatId], references: [id], onDelete: Restrict)
+
+  @@id([eventId, savedGroupChatId])
+  @@index([eventId])
+}
+
+// Модель Event
+model Event {
+  id          Int         @id @default(autoincrement())
+  creatorId   Int // Связь с User
+  creator     User        @relation(fields: [creatorId], references: [id])
+  title       String
+  description String
+  savedGroupLinks EventSavedGroup[]
+  /// Снимок из initData на момент создания (для карточки события).
+  creatorFirstName  String?
+  creatorLastName   String?
+  creatorUsername   String?
+  date        DateTime    @db.Timestamptz // Изменяем тип на TIMESTAMPTZ
+  users       User[]      @relation("UserEvent") // Связь с User через таблицу UserEvent
+  limit       Int
+  status      Boolean
+  /** Разрешить одному участнику несколько мест (основа/резерв) через +/−. Иначе — не более одной записи на пользователя. */
+  allowMultipleSlotsPerUser Boolean @default(false)
+  totalAmount Float       @default(0) // Общая сумма мероприятия
+  UserEvent   UserEvent[]
+}
+
+// Таблица для связи многие-ко-многим между User и Event
+model UserEvent {
+  userId                   Int
+  user                     User     @relation(fields: [userId], references: [id])
+  eventId                  Int
+  event                    Event    @relation(fields: [eventId], references: [id])
+  paid                     Boolean  @default(false) // Поле для отслеживания оплаты
+  amount                   Float    @default(0) // Сумма, оплаченная участником
+  mainParticipantsCount    Int      @default(0) // Количество основных участников
+  reserveParticipantsCount Int      @default(0) // Количество резервных участников
+  createdAt                DateTime @default(now()) // <- вот это
+
+  @@id([userId, eventId]) // Составной первичный ключ
+}

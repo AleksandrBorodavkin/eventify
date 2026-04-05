@@ -1,0 +1,8 @@
+/* Только строка/поле с ID чата — без обводки всей карточки группы */
+.event-group-ids-editor__id-highlight {
+  box-sizing: border-box;
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 2px solid var(--tgui--destructive_text_color, #e53935);
+}
