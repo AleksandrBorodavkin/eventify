@@ -14,7 +14,7 @@
     "5173": { "label": "Vite" }
   },
 
-  "postCreateCommand": "bash -c 'cd eventify-backend && bun install && cd ../eventify-frontend && bun install'",
+  "postCreateCommand": "bash -c 'git config --global user.name \"Alex Bor\" && git config --global user.email \"init220@gmail.com\" && cd eventify-backend && bun install && cd ../eventify-frontend && bun install'",
 
   "customizations": {
     "vscode": {
